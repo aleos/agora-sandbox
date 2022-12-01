@@ -8,7 +8,20 @@
 import AgoraRtcKit
 import Foundation
 
-@MainActor class LiveStream {
+@MainActor class LiveStream: ObservableObject {
+    
+    // The main entry point for Video SDK
+    var agoraEngine: AgoraRtcEngineKit!
+    // By default, set the current user role to broadcaster to both send and receive streams.
+    var userRole: AgoraClientRole = .broadcaster
+    
+    // Update with the App ID of your project generated on Agora Console.
+    let appID = ""
+    // Update with the temporary token generated in Agora Console.
+    var token = ""
+    // Update with the channel name you used to generate the token in Agora Console.
+    var channelName = "agora-aleos"
+    
     func checkForPermissions() -> Bool {
         var hasPermissions = false
         

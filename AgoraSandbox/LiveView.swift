@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LiveView: View {
     
+    @StateObject var liveStream: LiveStream = LiveStream()
+    
     // Track if the local user is in a call
     var joined: Bool = false
     
