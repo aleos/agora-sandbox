@@ -111,6 +111,9 @@
 				Base,
 			);
 			mainGroup = 57D2E3BB2938DE2200B01163;
+			packageReferences = (
+				57D2E3D52938E3D900B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
+			);
 			productRefGroup = 57D2E3C52938DE2200B01163 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -347,6 +350,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		57D2E3D52938E3D900B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AgoraIO/AgoraRtcEngine_iOS.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 57D2E3BC2938DE2200B01163 /* Project object */;
 }
