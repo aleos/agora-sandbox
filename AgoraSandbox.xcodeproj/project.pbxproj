@@ -14,6 +14,7 @@
 		57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3D62938E4FB00B01163 /* LiveView.swift */; };
 		57D2E3D92938E87D00B01163 /* LiveStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3D82938E87D00B01163 /* LiveStream.swift */; };
 		57D2E3DC2938E9B200B01163 /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 57D2E3DB2938E9B200B01163 /* RtcBasic */; };
+		57D2E3DE2938F10B00B01163 /* RepresentedUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3DD2938F10B00B01163 /* RepresentedUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		57D2E3CE2938DE2400B01163 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		57D2E3D62938E4FB00B01163 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 		57D2E3D82938E87D00B01163 /* LiveStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStream.swift; sourceTree = "<group>"; };
+		57D2E3DD2938F10B00B01163 /* RepresentedUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentedUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				57D2E3C92938DE2200B01163 /* ContentView.swift */,
 				57D2E3D62938E4FB00B01163 /* LiveView.swift */,
 				57D2E3D82938E87D00B01163 /* LiveStream.swift */,
+				57D2E3DD2938F10B00B01163 /* RepresentedUIView.swift */,
 				57D2E3CB2938DE2400B01163 /* Assets.xcassets */,
 				57D2E3CD2938DE2400B01163 /* Preview Content */,
 			);
@@ -151,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D2E3DE2938F10B00B01163 /* RepresentedUIView.swift in Sources */,
 				57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */,
 				57D2E3CA2938DE2200B01163 /* ContentView.swift in Sources */,
 				57D2E3C82938DE2200B01163 /* AgoraSandboxApp.swift in Sources */,

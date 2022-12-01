@@ -10,6 +10,10 @@ import Foundation
 
 @MainActor class LiveStream: NSObject, ObservableObject {
     
+    // The video feed for the local user is displayed here
+    var localView: UIView!
+    // The video feed for the remote user is displayed here
+    var remoteView: UIView!
     // Track if the local user is in a call
     var joined: Bool = false
     
@@ -84,5 +88,11 @@ import Foundation
 }
 
 extension LiveStream: AgoraRtcEngineDelegate {
-    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = uid
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = remoteView
+        agoraEngine.setupRemoteVideo(videoCanvas)
+    }
 }
