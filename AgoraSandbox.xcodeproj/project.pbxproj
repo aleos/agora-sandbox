@@ -11,6 +11,7 @@
 		57D2E3CA2938DE2200B01163 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3C92938DE2200B01163 /* ContentView.swift */; };
 		57D2E3CC2938DE2400B01163 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2E3CB2938DE2400B01163 /* Assets.xcassets */; };
 		57D2E3CF2938DE2400B01163 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2E3CE2938DE2400B01163 /* Preview Assets.xcassets */; };
+		57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3D62938E4FB00B01163 /* LiveView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		57D2E3C92938DE2200B01163 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		57D2E3CB2938DE2400B01163 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57D2E3CE2938DE2400B01163 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		57D2E3D62938E4FB00B01163 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				57D2E3C72938DE2200B01163 /* AgoraSandboxApp.swift */,
 				57D2E3C92938DE2200B01163 /* ContentView.swift */,
+				57D2E3D62938E4FB00B01163 /* LiveView.swift */,
 				57D2E3CB2938DE2400B01163 /* Assets.xcassets */,
 				57D2E3CD2938DE2400B01163 /* Preview Content */,
 			);
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */,
 				57D2E3CA2938DE2200B01163 /* ContentView.swift in Sources */,
 				57D2E3C82938DE2200B01163 /* AgoraSandboxApp.swift in Sources */,
 			);
