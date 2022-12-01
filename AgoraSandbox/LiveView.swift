@@ -11,24 +11,9 @@ struct LiveView: View {
     
     @StateObject var liveStream: LiveStream = LiveStream()
     
-    // Track if the local user is in a call
-    var joined: Bool = false
-    
-    
     var body: some View {
-        Button(joined ? "Leave" : "Join", action: buttonAction)
+        Button(liveStream.joined ? "Leave" : "Join", action: liveStream.buttonAction)
             .buttonStyle(.borderedProminent)
-    }
-    
-    func joinChannel() -> Bool { true }
-    func leaveChannel() {}
-    
-    func buttonAction() {
-        if !joined {
-            joinChannel()
-        } else {
-            leaveChannel()
-        }
     }
 }
 
