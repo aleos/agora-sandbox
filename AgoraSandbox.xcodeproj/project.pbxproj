@@ -12,6 +12,8 @@
 		57D2E3CC2938DE2400B01163 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2E3CB2938DE2400B01163 /* Assets.xcassets */; };
 		57D2E3CF2938DE2400B01163 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2E3CE2938DE2400B01163 /* Preview Assets.xcassets */; };
 		57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3D62938E4FB00B01163 /* LiveView.swift */; };
+		57D2E3D92938E87D00B01163 /* LiveStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2E3D82938E87D00B01163 /* LiveStream.swift */; };
+		57D2E3DC2938E9B200B01163 /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 57D2E3DB2938E9B200B01163 /* RtcBasic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,7 @@
 		57D2E3CB2938DE2400B01163 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57D2E3CE2938DE2400B01163 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		57D2E3D62938E4FB00B01163 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
+		57D2E3D82938E87D00B01163 /* LiveStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStream.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D2E3DC2938E9B200B01163 /* RtcBasic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +60,7 @@
 				57D2E3C72938DE2200B01163 /* AgoraSandboxApp.swift */,
 				57D2E3C92938DE2200B01163 /* ContentView.swift */,
 				57D2E3D62938E4FB00B01163 /* LiveView.swift */,
+				57D2E3D82938E87D00B01163 /* LiveStream.swift */,
 				57D2E3CB2938DE2400B01163 /* Assets.xcassets */,
 				57D2E3CD2938DE2400B01163 /* Preview Content */,
 			);
@@ -86,6 +91,9 @@
 			dependencies = (
 			);
 			name = AgoraSandbox;
+			packageProductDependencies = (
+				57D2E3DB2938E9B200B01163 /* RtcBasic */,
+			);
 			productName = AgoraSandbox;
 			productReference = 57D2E3C42938DE2200B01163 /* AgoraSandbox.app */;
 			productType = "com.apple.product-type.application";
@@ -115,7 +123,7 @@
 			);
 			mainGroup = 57D2E3BB2938DE2200B01163;
 			packageReferences = (
-				57D2E3D52938E3D900B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
+				57D2E3DA2938E9B200B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
 			);
 			productRefGroup = 57D2E3C52938DE2200B01163 /* Products */;
 			projectDirPath = "";
@@ -146,6 +154,7 @@
 				57D2E3D72938E4FB00B01163 /* LiveView.swift in Sources */,
 				57D2E3CA2938DE2200B01163 /* ContentView.swift in Sources */,
 				57D2E3C82938DE2200B01163 /* AgoraSandboxApp.swift in Sources */,
+				57D2E3D92938E87D00B01163 /* LiveStream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +365,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		57D2E3D52938E3D900B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */ = {
+		57D2E3DA2938E9B200B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AgoraIO/AgoraRtcEngine_iOS.git";
 			requirement = {
@@ -365,6 +374,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		57D2E3DB2938E9B200B01163 /* RtcBasic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57D2E3DA2938E9B200B01163 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = RtcBasic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 57D2E3BC2938DE2200B01163 /* Project object */;
 }
