@@ -34,7 +34,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        // Initializes the video view
         initViews()
+        // The following functions are used when calling Agora APIs
+        initializeAgoraEngine()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        leaveChannel()
+        DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
     }
     
     func joinChannel() {
