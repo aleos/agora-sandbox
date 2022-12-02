@@ -37,9 +37,43 @@ class ViewController: UIViewController {
         initViews()
     }
     
-    func joinChannel() -> Bool { return true }
+    func joinChannel() {
+        if !self.checkForPermissions() {
+            showMessage(title: "Error", text: "Permissions were not granted")
+            return
+        }
+        
+//        let option = AgoraRtcChannelMediaOptions()
+        
+        // Set the client role option as broadcaster or audience.
+//        if self.userRole == .broadcaster {
+//            option.clientRoleType = .broadcaster
+            setupLocalVideo()
+//        } else {
+//            option.clientRoleType = .audience
+//        }
+        
+        // For a video call scenario, set the channel profile as communication.
+//        option.channelProfile = .communication
+        
+        // Join the channel with a temp token. Pass in your token and channel name here
+        let result = agoraEngine.joinChannel(
+            byToken: token, channelId: channelName, info: nil, uid: 0,
+            joinSuccess: { (channel, uid, elapsed) in }
+        )
+        // Check if joining the channel was successful and set joined Bool accordingly
+        if (result == 0) {
+            joined = true
+            showMessage(title: "Success", text: "Successfully joined the channel as \(self.userRole)")
+        }
+    }
     
-    func leaveChannel() {}
+    func leaveChannel() {
+        agoraEngine.stopPreview()
+        let result = agoraEngine.leaveChannel(nil)
+        // Check if leaving the channel was successful and set joined Bool accordingly
+        if (result == 0) { joined = false }
+    }
     
     func initializeAgoraEngine() {
         let config = AgoraRtcEngineConfig()
