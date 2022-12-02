@@ -8,7 +8,7 @@
 import AgoraRtcKit
 import Foundation
 
-@MainActor class LiveStream: NSObject, ObservableObject {
+class LiveStream: NSObject, ObservableObject {
     
     // The video feed for the local user is displayed here
     var localView: UIView!
@@ -29,6 +29,19 @@ import Foundation
     // Update with the channel name you used to generate the token in Agora Console.
     var channelName = "agora-aleos"
     
+    override init() {
+        super.init()
+        // Initializes the video view
+        initViews()
+        // The following functions are used when calling Agora APIs
+        initializeAgoraEngine()
+    }
+    
+    deinit {
+        leaveChannel()
+        DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
+    }
+    
     func showMessage(title: String, text: String, delay: Int = 2) -> Void {
 //        let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
 //        self.present(alert, animated: true)
@@ -36,6 +49,13 @@ import Foundation
 //        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
 //            alert.dismiss(animated: true, completion: nil)
 //        })
+    }
+    
+    func initViews() {
+        // Initializes the remote video view. This view displays video when a remote host joins the channel.
+        remoteView = UIView()
+        // Initializes the local video window. This view displays video when the local user is a host.
+        localView = UIView()
     }
     
     func checkForPermissions() -> Bool {
@@ -111,7 +131,7 @@ import Foundation
         agoraEngine.stopPreview()
         let result = agoraEngine.leaveChannel(nil)
         // Check if leaving the channel was successful and set joined Bool accordingly
-        if (result == 0) { joined = false }
+        if result == 0 { joined = false }
     }
 
     
