@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var agoraEngine: AgoraRtcEngineKit!
     // By default, set the current user role to broadcaster to both send and receive streams.
     var userRole: AgoraClientRole = .broadcaster
-
+    
     // Update with the App ID of your project generated on Agora Console.
     let appID = "<#Your app ID#>"
     // Update with the temporary token generated in Agora Console.
@@ -31,22 +31,43 @@ class ViewController: UIViewController {
     var joinButton: UIButton!
     // Track if the local user is in a call
     var joined: Bool = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
     }
-
+    
     func joinChannel() -> Bool { return true }
-
+    
     func leaveChannel() {}
-
+    
+    func initializeAgoraEngine() {
+        let config = AgoraRtcEngineConfig()
+        // Pass in your App ID here.
+        config.appId = appID
+        // Use AgoraRtcEngineDelegate for the following delegate parameter.
+        agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
+    }
+    
+    func setupLocalVideo() {
+        // Enable the video module
+        agoraEngine.enableVideo()
+        // Start the local video preview
+        agoraEngine.startPreview()
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = 0
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = localView
+        // Set the local video view
+        agoraEngine.setupLocalVideo(videoCanvas)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         remoteView.frame = CGRect(x: 20, y: 50, width: 350, height: 330)
         localView.frame = CGRect(x: 20, y: 400, width: 350, height: 330)
     }
-
+    
     func initViews() {
         // Initializes the remote video view. This view displays video when a remote host joins the channel.
         remoteView = UIView()
@@ -58,11 +79,11 @@ class ViewController: UIViewController {
         joinButton = UIButton(type: .system)
         joinButton.frame = CGRect(x: 140, y: 700, width: 100, height: 50)
         joinButton.setTitle("Join", for: .normal)
-
+        
         joinButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         self.view.addSubview(joinButton)
     }
-
+    
     @objc func buttonAction(sender: UIButton!) {
         if !joined {
             joinChannel()
@@ -77,20 +98,20 @@ class ViewController: UIViewController {
     
     func checkForPermissions() -> Bool {
         var hasPermissions = false
-
+        
         switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized: hasPermissions = true
-            default: hasPermissions = requestCameraAccess()
+        case .authorized: hasPermissions = true
+        default: hasPermissions = requestCameraAccess()
         }
         // Break out, because camera permissions have been denied or restricted.
         if !hasPermissions { return false }
         switch AVCaptureDevice.authorizationStatus(for: .audio) {
-            case .authorized: hasPermissions = true
-            default: hasPermissions = requestAudioAccess()
+        case .authorized: hasPermissions = true
+        default: hasPermissions = requestAudioAccess()
         }
         return hasPermissions
     }
-
+    
     func requestCameraAccess() -> Bool {
         var hasCameraPermission = false
         let semaphore = DispatchSemaphore(value: 0)
@@ -101,7 +122,7 @@ class ViewController: UIViewController {
         semaphore.wait()
         return hasCameraPermission
     }
-
+    
     func requestAudioAccess() -> Bool {
         var hasAudioPermission = false
         let semaphore = DispatchSemaphore(value: 0)
@@ -120,5 +141,16 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
             alert.dismiss(animated: true, completion: nil)
         })
+    }
+}
+
+extension ViewController: AgoraRtcEngineDelegate {
+    // Callback called when a new host joins the channel
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = uid
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = remoteView
+        agoraEngine.setupRemoteVideo(videoCanvas)
     }
 }
