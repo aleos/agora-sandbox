@@ -12,8 +12,14 @@ struct LiveView: View {
     @StateObject var liveStream: LiveStream = LiveStream()
     
     var body: some View {
-        Button(liveStream.joined ? "Leave" : "Join", action: liveStream.buttonAction)
-            .buttonStyle(.borderedProminent)
+        ZStack {
+            VStack {
+                liveStream.remoteView
+                liveStream.localView
+            }
+            Button(liveStream.joined ? "Leave" : "Join", action: liveStream.buttonAction)
+                .buttonStyle(.borderedProminent)
+        }
     }
 }
 

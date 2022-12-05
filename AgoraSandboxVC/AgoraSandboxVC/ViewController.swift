@@ -17,11 +17,11 @@ class ViewController: UIViewController {
     var userRole: AgoraClientRole = .broadcaster
     
     // Update with the App ID of your project generated on Agora Console.
-    let appID = "<#Your app ID#>"
+    let appID = "7649892c21394feca0b19ca85b580d82"
     // Update with the temporary token generated in Agora Console.
-    var token = "<#Your temp access token#>"
+    var token = "007eJxTYHjw8u1e64OS538+fdXR+H29rsxiG6/t8g3vTxXMOdp5pmmRAoO5mYmlhaVRspGhsaVJWmpyokGSoWVyooVpkqmFQYqFEYtQX3JDICNDQ9UfFkYGCATxWRkSc1LzixkYAKFPIwg="
     // Update with the channel name you used to generate the token in Agora Console.
-    var channelName = "<#Your channel name#>"
+    var channelName = "aleos"
     
     // The video feed for the local user is displayed here
     var localView: UIView!

@@ -10,24 +10,24 @@ import Foundation
 
 class LiveStream: NSObject, ObservableObject {
     
-    // The video feed for the local user is displayed here
-    var localView: UIView!
-    // The video feed for the remote user is displayed here
-    var remoteView: UIView!
-    // Track if the local user is in a call
-    var joined: Bool = false
-    
     // The main entry point for Video SDK
     var agoraEngine: AgoraRtcEngineKit!
     // By default, set the current user role to broadcaster to both send and receive streams.
     var userRole: AgoraClientRole = .broadcaster
     
     // Update with the App ID of your project generated on Agora Console.
-    let appID = ""
+    let appID = "<#Your app ID#>"
     // Update with the temporary token generated in Agora Console.
-    var token = ""
+    var token = "<#Your temp access token#>"
     // Update with the channel name you used to generate the token in Agora Console.
-    var channelName = "agora-aleos"
+    var channelName = "<#Your channel name#>"
+    
+    // The video feed for the local user is displayed here
+    @Published var localView: RepresentedUIView!
+    // The video feed for the remote user is displayed here
+    @Published var remoteView: RepresentedUIView!
+    // Track if the local user is in a call
+    @Published var joined: Bool = false
     
     override init() {
         super.init()
@@ -42,20 +42,78 @@ class LiveStream: NSObject, ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
     }
     
-    func showMessage(title: String, text: String, delay: Int = 2) -> Void {
-//        let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
-//        self.present(alert, animated: true)
-//        let deadlineTime = DispatchTime.now() + .seconds(delay)
-//        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
-//            alert.dismiss(animated: true, completion: nil)
-//        })
+    func joinChannel() {
+        if !checkForPermissions() {
+            showMessage(title: "Error", text: "Permissions were not granted")
+            return
+        }
+        
+//        let option = AgoraRtcChannelMediaOptions()
+        
+        // Set the client role option as broadcaster or audience.
+//        if self.userRole == .broadcaster {
+//            option.clientRoleType = .broadcaster
+            setupLocalVideo()
+//        } else {
+//            option.clientRoleType = .audience
+//        }
+        
+        // For a video call scenario, set the channel profile as communication.
+//        option.channelProfile = .communication
+        
+        // Join the channel with a temp token. Pass in your token and channel name here
+        let result = agoraEngine.joinChannel(
+            byToken: token, channelId: channelName, info: nil, uid: 0,
+            joinSuccess: { (channel, uid, elapsed) in }
+        )
+        // Check if joining the channel was successful and set joined Bool accordingly
+        if result == 0 {
+            joined = true
+            showMessage(title: "Success", text: "Successfully joined the channel as \(self.userRole)")
+        }
+    }
+    
+    func leaveChannel() {
+        agoraEngine.stopPreview()
+        let result = agoraEngine.leaveChannel(nil)
+        // Check if leaving the channel was successful and set joined Bool accordingly
+        if result == 0 { joined = false }
+    }
+    
+    func initializeAgoraEngine() {
+        let config = AgoraRtcEngineConfig()
+        // Pass in your App ID here.
+        config.appId = appID
+        // Use AgoraRtcEngineDelegate for the following delegate parameter.
+        agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
+    }
+    
+    func setupLocalVideo() {
+        // Enable the video module
+        agoraEngine.enableVideo()
+        // Start the local video preview
+        agoraEngine.startPreview()
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = 0
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = localView.view
+        // Set the local video view
+        agoraEngine.setupLocalVideo(videoCanvas)
     }
     
     func initViews() {
         // Initializes the remote video view. This view displays video when a remote host joins the channel.
-        remoteView = UIView()
+        remoteView = RepresentedUIView(view: UIView())
         // Initializes the local video window. This view displays video when the local user is a host.
-        localView = UIView()
+        localView = RepresentedUIView(view: UIView())
+    }
+    
+    func buttonAction() {
+        if !joined {
+            joinChannel()
+        } else {
+            leaveChannel()
+        }
     }
     
     func checkForPermissions() -> Bool {
@@ -96,82 +154,23 @@ class LiveStream: NSObject, ObservableObject {
         return hasAudioPermission
     }
     
-    func joinChannel() {
-        if !checkForPermissions() {
-            showMessage(title: "Error", text: "Permissions were not granted")
-            return
-        }
-
-//        let option = AgoraRtcChannelMediaOptions()
-
-        // Set the client role option as broadcaster or audience.
-//        if self.userRole == .broadcaster {
-//            option.clientRoleType = .broadcaster
-            setupLocalVideo()
-//        } else {
-//            option.clientRoleType = .audience
-//        }
-
-        // For a video call scenario, set the channel profile as communication.
-//        option.channelProfile = .communication
-
-        // Join the channel with a temp token. Pass in your token and channel name here
-        let result = agoraEngine.joinChannel(
-            byToken: token, channelId: channelName, info: nil, uid: 0,
-            joinSuccess: { (channel, uid, elapsed) in }
-        )
-        // Check if joining the channel was successful and set joined Bool accordingly
-        if result == 0 {
-            joined = true
-            showMessage(title: "Success", text: "Successfully joined the channel as \(self.userRole)")
-        }
+    func showMessage(title: String, text: String, delay: Int = 2) -> Void {
+//        let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
+//        self.present(alert, animated: true)
+//        let deadlineTime = DispatchTime.now() + .seconds(delay)
+//        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
+//            alert.dismiss(animated: true, completion: nil)
+//        })
     }
-
-    func leaveChannel() {
-        agoraEngine.stopPreview()
-        let result = agoraEngine.leaveChannel(nil)
-        // Check if leaving the channel was successful and set joined Bool accordingly
-        if result == 0 { joined = false }
-    }
-
-    
-    func buttonAction() {
-        if !joined {
-            joinChannel()
-        } else {
-            leaveChannel()
-        }
-    }
-    
-    func initializeAgoraEngine() {
-        let config = AgoraRtcEngineConfig()
-        // Pass in your App ID here.
-        config.appId = appID
-        // Use AgoraRtcEngineDelegate for the following delegate parameter.
-        agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
-    }
-    
-    func setupLocalVideo() {
-        // Enable the video module
-        agoraEngine.enableVideo()
-        // Start the local video preview
-        agoraEngine.startPreview()
-        let videoCanvas = AgoraRtcVideoCanvas()
-        videoCanvas.uid = 0
-        videoCanvas.renderMode = .hidden
-        videoCanvas.view = localView
-        // Set the local video view
-        agoraEngine.setupLocalVideo(videoCanvas)
-    }
-
 }
 
 extension LiveStream: AgoraRtcEngineDelegate {
+    // Callback called when a new host joins the channel
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = uid
         videoCanvas.renderMode = .hidden
-        videoCanvas.view = remoteView
+        videoCanvas.view = remoteView.view
         agoraEngine.setupRemoteVideo(videoCanvas)
     }
 }
